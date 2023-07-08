@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\QueryRepositories\SeatRepository;
+use App\Models\Seat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('/room-seats/{roomId}', [SeatRepository::class, 'getAllSeatsByRoom']);
+Route::post('/reserve', [SeatRepository::class, 'reserveSeat']);
