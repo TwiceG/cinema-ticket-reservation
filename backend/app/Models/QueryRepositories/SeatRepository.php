@@ -14,19 +14,32 @@ class SeatRepository
         return DB::table('seats')->get();
     }
 
-    public static function getAllSeatsByRoom($roomId)
+    public static function getAllSeatsByRoom(Request $request)
     {
-        return DB::table('room_seats')->where('room_id', $roomId)->get();
+        $roomId = $request->query('roomId');
+        $seats = DB::table('room_seats')
+            ->where('room_id', $roomId)
+            ->pluck('seat_id');
+
+        $seatData = DB::table('seats')
+            ->whereIn('seat_id', $seats)
+            ->get();
+
+        return $seatData;
     }
 
     public static function reserveSeat(Request $request)
         {
-            $seatId = $request->input('seatId');
-            $updated = DB::table('seats')->where('seat_id', $seatId)->update(['reserved'=> true]);
-            if($updated) {
-                return response()->json(['message' => 'Seat reserved successfully']);
-            } else {
-                return response()->json(['message' => 'Seat not found Err '. http_response_code()]);
+            $selectedSeatIds = $request->input('seat_ids');
+            foreach ($selectedSeatIds as $seatId) {
+                $updated = DB::table('seats')
+                    ->where('seat_id', $seatId)
+                    ->update(['reserved'=> true]);
+                if($updated) {
+                    return redirect("/email?seatId={$seatId}");
+                } else {
+                    return response()->json(['message' => 'Seat not found Err '. http_response_code()]);
+                }
             }
 
         }

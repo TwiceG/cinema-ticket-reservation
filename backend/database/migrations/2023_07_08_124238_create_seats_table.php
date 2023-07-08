@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('seats', function (Blueprint $table) {
             $table->id('seat_id');
+            $table->string('email')->nullable();
             $table->integer('seat_number');
             $table->boolean('reserved')->default(false);
         });

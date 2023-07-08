@@ -21,5 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/room-seats/{roomId}', [SeatRepository::class, 'getAllSeatsByRoom']);
+Route::get('/room-seats?roomId={roomId}&?roomName', [SeatRepository::class, 'getAllSeatsByRoom']);
 Route::post('/reserve', [SeatRepository::class, 'reserveSeat']);
