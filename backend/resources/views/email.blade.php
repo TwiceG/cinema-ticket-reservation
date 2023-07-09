@@ -35,7 +35,7 @@
 
 
     function updateCountdown() {
-        const targetDate = moment().add(1, 'minutes');
+        const targetDate = moment().add(2, 'minutes');
         const seatId = "{{ $seatId }}";
         const timerElement = document.querySelector("#timer");
 

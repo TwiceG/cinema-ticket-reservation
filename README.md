@@ -58,9 +58,18 @@ After cloning the repository and opening it, execute the following commands in y
 `php setup.php`
 
 - Installs the project dependencies with Composer:
+  usually:
+
   ```
   composer install
   ```
+
+  now: (to reduce vendor folder size)
+
+  ```
+  composer install --optimize-autoloader --no-dev
+  ```
+
 - Executes the Laravel migrations:
   ```
   php artisan migrate
@@ -92,4 +101,4 @@ Because this project is still in progress there is a lot to develop and implemen
 
 If you have any questions about the project feel free to get in touch with me:
 
-**ggabor.gabor25@gmail.com**
+`ggabor.gabor25@gmail.com`
