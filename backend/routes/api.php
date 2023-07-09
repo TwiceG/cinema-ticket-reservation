@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SeatController;
 use App\Models\QueryRepositories\SeatRepository;
 use App\Models\Seat;
 use Illuminate\Http\Request;
@@ -21,5 +22,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/room-seats?roomId={roomId}&?roomName', [SeatRepository::class, 'getAllSeatsByRoom']);
-Route::post('/reserve', [SeatRepository::class, 'reserveSeat']);
+//Route::get('/room-seats?roomId={roomId}&?roomName', [SeatRepository::class, 'getAllSeatsByRoom']);
+//Route::post('/reserve', [SeatRepository::class, 'reserveSeat']);
+//Route::post('send-email', [SeatRepository::class, 'sendEmail']);
+//Route::post('/check-reservation/{seatId}', [SeatController::class, 'checkReservation']);
+
+Route::get('/room-seats', [SeatController::class, 'getAllSeatsByRoom']);
+Route::post('/reserve', [SeatController::class, 'reserveSeat']);
+Route::post('/send-email', [SeatController::class, 'sendEmail']);
+Route::get('/check-reservation', [SeatController::class, 'checkReservation']);
+
+

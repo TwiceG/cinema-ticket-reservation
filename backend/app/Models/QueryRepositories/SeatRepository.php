@@ -2,10 +2,7 @@
 
 namespace App\Models\QueryRepositories;
 
-use App\Models\Seat;
-use http\Env\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 
 class SeatRepository
 {
@@ -14,33 +11,46 @@ class SeatRepository
         return DB::table('seats')->get();
     }
 
-    public static function getAllSeatsByRoom(Request $request)
+    public static function getSeatById($seatId)
     {
-        $roomId = $request->query('roomId');
+        return DB::table('seats')
+            ->where('seat_id', $seatId)
+            ->first();
+    }
+
+    public static function getAllSeatsByRoom($roomId)
+    {
         $seats = DB::table('room_seats')
             ->where('room_id', $roomId)
             ->pluck('seat_id');
 
-        $seatData = DB::table('seats')
+        return DB::table('seats')
             ->whereIn('seat_id', $seats)
             ->get();
-
-        return $seatData;
     }
 
-    public static function reserveSeat(Request $request)
-        {
-            $selectedSeatIds = $request->input('seat_ids');
-            foreach ($selectedSeatIds as $seatId) {
-                $updated = DB::table('seats')
-                    ->where('seat_id', $seatId)
-                    ->update(['reserved'=> true]);
-                if($updated) {
-                    return redirect("/email?seatId={$seatId}");
-                } else {
-                    return response()->json(['message' => 'Seat not found Err '. http_response_code()]);
-                }
-            }
+    public static function reserveSeat($seatId)
+    {
+        return DB::table('seats')
+            ->where('seat_id', $seatId)
+            ->update(['reserved' => true]);
+    }
 
+    public static function checkReservation($seatId)
+    {
+        $seat = self::getSeatById($seatId);
+        if (!$seat->email) {
+            return DB::table('seats')
+                ->where('seat_id', $seatId)
+                ->update(['reserved' => false]);
         }
+        return false;
+    }
+
+    public static function sendEmail($seatId, $email)
+    {
+        return DB::table('seats')
+            ->where('seat_id', $seatId)
+            ->update(['email' => $email]);
+    }
 }

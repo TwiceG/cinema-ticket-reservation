@@ -1,7 +1,10 @@
 <?php
 
+
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
-use \App\Models\QueryRepositories\RoomRepository;
 use \App\Models\QueryRepositories\SeatRepository;
 use Illuminate\Http\Request;
 
@@ -16,20 +19,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return view('home')->with('rooms', RoomRepository::getAllRooms());
-});
 
 
 
-Route::get('/reservation', function (Request $request) {
-    $roomName = $request->query('roomName');
-    $seats = SeatRepository::getAllSeatsByRoom($request);
-    //dd($seats);
-    return view('reservation')->with(['seats'=> $seats, 'roomName' => $roomName]);
-});
 
-Route::get('/email', function (Request $request) {
-    $seatId = $request->query('seat_id');
-    return view('email')->with(['seatId' => $seatId]);
-});
+Route::get('/', [HomeController::class, 'getAllRooms']);
+
+Route::get('/reservation', [ReservationController::class, 'getReservationData']);
+
+Route::get('/email', [EmailController::class, 'showEmail']);
