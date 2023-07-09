@@ -45,13 +45,9 @@ class SeatController extends Controller
                 return response()->json(['message' => 'Failed to reserve seat'], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
-        //!TODO
-//        if(sizeof($selectedSeatIds) > 0) {
-//            $queryParameters = ['seatId1' => $selectedSeatIds[0], 'seatId2' => $selectedSeatIds[1] ];
-//        }else{
-//            $queryParameters = ['seatId1' => $selectedSeatIds[0]];
-//        }
-        $queryParameters = ['seatId1' => $selectedSeatIds[0]];
+        //!TODO implement multi reservation
+
+        $queryParameters = ['seatId' => $selectedSeatIds[0]];
         return Redirect::to('/email?' . http_build_query($queryParameters));
     }
 

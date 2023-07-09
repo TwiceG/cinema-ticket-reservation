@@ -10,7 +10,7 @@ class EmailController extends Controller
 {
     public function showEmail(Request $request)
     {
-        $seatId = $request->query('seat_id');
+        $seatId = $request->query('seatId');
         return view('email')->with(['seatId' => $seatId]);
     }
 }
