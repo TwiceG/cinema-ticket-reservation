@@ -14,7 +14,7 @@ The Cinema project aims to provide a platform for reserving seats in a cinema. P
   - [Second step](#second-step)
   - [Third step](#third-step)
 - [Conclusion](#conclusion)
-- [Contact](#license)
+- [Contact](#contact)
 
 ## Prerequisites
 
