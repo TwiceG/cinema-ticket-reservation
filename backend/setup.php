@@ -1,6 +1,6 @@
 <?php
 
-exec('composer install');
+exec('composer install --optimize-autoloader --no-dev');
 // Run migration
 exec('php artisan migrate', $migrationOutput, $migrationExitCode);
 
